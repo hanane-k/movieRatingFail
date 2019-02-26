@@ -1,11 +1,13 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<div class="jumbotron jumbotron-fluid"><div class="container"><h1 class="display-4">Movie Rating</h1>
+<div class="jumbotron jumbotron-fluid">
+<div class="container">
+<h1 class="display-4">Movie Rating</h1>
 <p class="lead">Le premier site français pour évaluer les films tout pourris produits par le cinéma français</p>
 </div>
 </div>
-<!-- A voir si on intégre ds le futur -->
+{# A voir si on intégre ds le futur -->
 <!-- <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
   <div class="carousel-inner">
     <div class="carousel-item active">
@@ -26,7 +28,7 @@
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="sr-only">Next</span>
   </a>
-</div> -->
+</div> #}
 <div class="container">
 <h2>{% block pageTitle %}{% endblock %}</h2>{% block main %}{% endblock %}
 </div>

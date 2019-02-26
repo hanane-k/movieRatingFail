@@ -44,6 +44,7 @@ class Movie
     private $author;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Evaluation", mappedBy="movie")
      */
     private $evaluations;
 

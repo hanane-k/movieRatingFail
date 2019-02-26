@@ -7,7 +7,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 //Ne c ps kel é le bon faker
 // use App\Entity\Faker;
 // use Doctrine\Bundle\Faker;
-// use Faker;
+use Faker;
 
 class MovieFixtures extends Fixture
 {
