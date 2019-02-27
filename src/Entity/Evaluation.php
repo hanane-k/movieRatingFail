@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\User;
+use App\Entity\Movie;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EvaluationRepository")
@@ -32,13 +34,13 @@ class Evaluation
     private $evalDate;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Movie", inversedBy="evaluations")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Movie", inversedBy="Evaluations")
      * @ORM\JoinColumn(nullable=false)
      */
     private $movie;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="evaluations")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="Evaluations")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;

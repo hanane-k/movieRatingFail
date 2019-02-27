@@ -2,7 +2,16 @@
 
 {% block title %}{{ a.title }}{% endblock %}
 
-{% block pageTitle %} {{ a.title }} {% endblock %}
+{% block pageTitle %} 
+    <div class="text-center container">
+        <h1 class="text-danger">{{ a.title }}</h1>
+        <p>{{ a.sumary }}</p><br>
+        {# {{ a.release_year }}  #}
+        <h5 class="font-weight-bold">Le type du film : {{ a.type }}</h5>
+        <h5 class="font-weight-bold">{{ a.author }}</h5>
+        {# {{ a.e.evaluations }}  #}
+    </div>
+{% endblock %}
 
 {% block main %}
 

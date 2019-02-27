@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\MovieRepository;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 
 class TestController extends AbstractController
@@ -55,14 +56,14 @@ class TestController extends AbstractController
     }
 
     /**
-     * @Route("/evaluation/{id}", name="evaluation")
-     * @Isgranted("ROLE")
+     * @Route("/evaluation/{id}", name="evaluation", methods={"GET","POST"})
+     * @Isgranted("ROLE_USER")
      */
-    public function rate(Movie $b, Request $c)
+    public function rate(Movie $movie, Request $request)
     {
-        $d = new Evaluation();
+        $evaluation = new Evaluation();
 
-        $form = $this->createFormBuilder($d)
+        $form = $this->createFormBuilder($evaluation)
             ->add('comment')
             ->add('grade')
             ->add('save', SubmitType::class)
@@ -71,15 +72,15 @@ class TestController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-          $d.setMovie($b);
-          $d.setUser($u);
           $entityManager = $this->getDoctrine()->getManager();
-          $entityManager->persist($d);
+          $evaluation->setMovie($movie);
+          $evaluation->setUser($user);
+          $entityManager->persist($evaluation);
           $entityManager->flush();
         }
 
         return $this->render('test/evaluation.html.twig', [
-          "b" => $b,
+          "movie" => $movie,
           "form" => $form->createView()
         ]);
     }
