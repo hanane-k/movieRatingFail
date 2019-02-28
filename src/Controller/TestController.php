@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Movie;
+use App\Entity\User;
 use App\Entity\Evaluation;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,13 +29,13 @@ class TestController extends AbstractController
         ]);
     }
 
-    // /**
-    //  * @Route("/test", name="test")
-    //  */
-    // // fonction fète pr tester ds trucs
+    /**
+     * @Route("/test", name="test")
+     */
+    // fonction fète pr tester ds trucs
 
-    // public function test()
-    // {
+    public function test()
+    {
     //     $ms = $this->getDoctrine()->getRepository(Movie::class)->findAll();
     //     // fonction qui essé de calc moyen note flm mais prblm
     //     for ($i=0; $i < count($ms) ; $i) {
@@ -42,8 +43,11 @@ class TestController extends AbstractController
     //     }
     //     return $this->render('test/index.html.twig', [
     //       "ms" => $ms
+    //     ]);    //     return $this->render('test/index.html.twig', [
+    //       "ms" => $ms
     //     ]);
-    // }
+      return new Response("<h1>c'est la page test</h1>");
+    }
 
     /**
      * @Route("/single/{id}", name="show")
@@ -62,7 +66,8 @@ class TestController extends AbstractController
     public function rate(Movie $movie, Request $request)
     {
         $evaluation = new Evaluation();
-
+        $user = $this->getUser();
+        dump($user);
         $form = $this->createFormBuilder($evaluation)
             ->add('comment')
             ->add('grade')
@@ -77,6 +82,7 @@ class TestController extends AbstractController
           $evaluation->setUser($user);
           $entityManager->persist($evaluation);
           $entityManager->flush();
+          return $this->redirectToRoute('index');
         }
 
         return $this->render('test/evaluation.html.twig', [

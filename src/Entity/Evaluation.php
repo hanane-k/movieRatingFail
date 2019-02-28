@@ -34,13 +34,13 @@ class Evaluation
     private $evalDate;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Movie", inversedBy="Evaluations")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Movie", inversedBy="evaluations")
      * @ORM\JoinColumn(nullable=false)
      */
     private $movie;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="Evaluations")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="evaluations")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
