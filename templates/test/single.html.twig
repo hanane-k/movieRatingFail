@@ -11,7 +11,7 @@
         <h5 class="font-weight-bold">{{ a.author }}</h5>
         {% for e in a.evaluations %}
         <h5 class="font-weight-bold">Ce film a {{ e.grade }} étoiles</h5>
-        <h5 class="font-weight-bold">Ce film a {{ a.moyenne }} étoiles</h5>
+        {# <h5 class="font-weight-bold">Ce film a {{ array_sum ([e.grade]) }} étoiles</h5> #}
         {% endfor %}
     </div>
 {% endblock %}

@@ -90,4 +90,14 @@ class TestController extends AbstractController
           "form" => $form->createView()
         ]);
     }
+
+    /**
+     * @Route("/moyenne/{id}", name="moyenne")
+     */
+    public function getAverage($evaluations) {
+      $evaluations = $this->getEvaluations();
+      $moyenne = array_sum($this->getEvaluations())/count($evaluations);
+      return $moyenne;
+  }
+
 }
