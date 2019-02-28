@@ -152,6 +152,16 @@ class Movie
 
     // VOIR SI C PAS MIEU DE FAIRE UNE MET DANS L'ENTIT POUR RECUPÉRAR LA NOTE MOYENE
     public function getAverage() {
-        
+        $evaluations = $this->getEvaluations();
+        if (!empty($evaluations)) {
+          foreach ($evaluations as $key => $value) {
+            $grades = $value->getGrade();
+            $somme = array_sum([$grades]);
+            dump($somme);
+            
+            $moyenne = $somme/count([$this->evaluations]);
+            return $moyenne;    
+          }
+       }
     }
-}
+  }

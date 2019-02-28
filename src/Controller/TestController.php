@@ -52,10 +52,12 @@ class TestController extends AbstractController
     /**
      * @Route("/single/{id}", name="show")
      */
-    public function show(Movie $a)
+    public function show(Movie $movie)
     {
+      $average = $movie->getAverage();
         return $this->render('test/single.html.twig', [
-          "a" => $a
+          "movie" => $movie,
+          "average" => $average
         ]);
     }
 
@@ -90,14 +92,5 @@ class TestController extends AbstractController
           "form" => $form->createView()
         ]);
     }
-
-    /**
-     * @Route("/moyenne/{id}", name="moyenne")
-     */
-    public function getAverage($evaluations) {
-      $evaluations = $this->getEvaluations();
-      $moyenne = array_sum($this->getEvaluations())/count($evaluations);
-      return $moyenne;
-  }
 
 }
