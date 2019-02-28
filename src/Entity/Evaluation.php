@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\User;
+use App\Entity\Movie;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EvaluationRepository")

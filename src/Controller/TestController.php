@@ -5,64 +5,72 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Movie;
+use App\Entity\User;
 use App\Entity\Evaluation;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\MovieRepository;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
-    // /**
-    //  * @Route("/lapin", name="index")
-    //  */
 
 class TestController extends AbstractController
 {
-
-
-    /**
-     * fonction fète pr tester ds trucs
-     * @Route("/test", name="test")
-     */
-    public function test()
-    {
-        $ms = $this->getDoctrine()->getRepository(Movie::class)->findAll();
-        //fonction qui essé de calc moyen note flm mais prblm
-        for ($i=0; $i < count($ms) ; $i) {
-          $notes = $ms[$i]->getEvaluations()->getGrade();
-        }
-        return $this->render('test/index.html.twig', [
-          "ms" => $ms
-        ]);
-    }
-
     /**
      * @Route("/", name="index")
      */
-    public function index()
+    public function index(Request $request)
     {
-        $ms = $this->getDoctrine()->getRepository(Movie::class)->findAll;
+      // return new Response("<html><body>hi</html></body>");
+        $ms = $this->getDoctrine()->getRepository(Movie::class)->findAll();
         return $this->render('test/index.html.twig', [
           "ms" => $ms
         ]);
     }
 
     /**
-     * @Route("/single/{id}", name="index")
+     * @Route("/test", name="test")
      */
-    public function show(Movie $a)
+    // fonction fète pr tester ds trucs
+
+    public function test()
     {
-        return $this->render('single.html.twig', [
-          "a" => $a
+    //     $ms = $this->getDoctrine()->getRepository(Movie::class)->findAll();
+    //     // fonction qui essé de calc moyen note flm mais prblm
+    //     for ($i=0; $i < count($ms) ; $i) {
+    //       $notes = $ms[$i]->getEvaluations()->getGrade();
+    //     }
+    //     return $this->render('test/index.html.twig', [
+    //       "ms" => $ms
+    //     ]);    //     return $this->render('test/index.html.twig', [
+    //       "ms" => $ms
+    //     ]);
+      return new Response("<h1>c'est la page test</h1>");
+    }
+
+    /**
+     * @Route("/single/{id}", name="show")
+     */
+    public function show(Movie $movie)
+    {
+      $average = $movie->getAverage();
+        return $this->render('test/single.html.twig', [
+          "movie" => $movie,
+          "average" => $average
         ]);
     }
 
     /**
-     * @Route("/evaluation/{id}", name="index")
-     * @Isgranted("ROLE")
+     * @Route("/evaluation/{id}", name="evaluation", methods={"GET","POST"})
+     * @Isgranted("ROLE_USER")
      */
-    public function rate(Movie $b, Request $c)
+    public function rate(Movie $movie, Request $request)
     {
-        $d = new Evaluation();
-
-        $form = $this->createFormBuilder($d)
+        $evaluation = new Evaluation();
+        $user = $this->getUser();
+        dump($user);
+        $form = $this->createFormBuilder($evaluation)
             ->add('comment')
             ->add('grade')
             ->add('save', SubmitType::class)
@@ -71,16 +79,18 @@ class TestController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-          $d.setMovie($b);
-          $d.setUser($u);
           $entityManager = $this->getDoctrine()->getManager();
-          $entityManager->persist($d);
+          $evaluation->setMovie($movie);
+          $evaluation->setUser($user);
+          $entityManager->persist($evaluation);
           $entityManager->flush();
+          return $this->redirectToRoute('index');
         }
 
         return $this->render('test/evaluation.html.twig', [
-          "b" => $b,
+          "movie" => $movie,
           "form" => $form->createView()
         ]);
     }
+
 }

@@ -1,8 +1,18 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}{{ a.title }}{% endblock %}
+{% block title %}{{ movie.title }}{% endblock %}
 
-{% block pageTitle %} {{ a.title }} {% endblock %}
+{% block pageTitle %} 
+    <div class="text-center container">
+        <h1 class="text-danger">{{ movie.title }}</h1>
+        <p>{{ movie.sumary }}</p><br>
+        <h5 class="font-weight-bold">{{ movie.releaseYear|date("d,m,y") }}</h5>
+        <h5 class="font-weight-bold">Le type du film : <span class="text-danger">{{ movie.type }}</span></h5>
+        <h5 class="font-weight-bold">L'auteur du film : <span class="text-danger">{{ movie.author }}</span></h5>
+        <h5 class="font-weight-bold">Ce film a {% for e in movie.evaluations %} <span class="text-danger">{{ e.grade }}</span>, {% endfor %} étoiles</h5>
+        <h5 class="font-weight-bold">Ce film a une évaluation moyenne de : <span class="text-danger">{{ average }}</span> étoiles</h5>
+    </div>
+{% endblock %}
 
 {% block main %}
 

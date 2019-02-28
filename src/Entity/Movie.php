@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Evaluation;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\MovieRepository")
@@ -44,6 +45,7 @@ class Movie
     private $author;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Evaluation", mappedBy="movie")
      */
     private $evaluations;
 
@@ -148,19 +150,18 @@ class Movie
         return $this;
     }
 
-
-
-
-
-
-
-
-
-
-
-
     // VOIR SI C PAS MIEU DE FAIRE UNE MET DANS L'ENTIT POUR RECUPÉRAR LA NOTE MOYENE
     public function getAverage() {
-
+        $evaluations = $this->getEvaluations();
+        if (!empty($evaluations)) {
+          foreach ($evaluations as $key => $value) {
+            $grades = $value->getGrade();
+            $somme = array_sum([$grades]);
+            dump($somme);
+            
+            $moyenne = $somme/count([$this->evaluations]);
+            return $moyenne;    
+          }
+       }
     }
-}
+  }
