@@ -49,15 +49,20 @@
 {% block pageTitle %}Accueil{% endblock %}
 
 {% block main %}
+<div class="container">
+<div class="row">
 {% for m in ms %}
-<div class="text-center card m-5" style="width: 18rem;">
-<img class="card-img-top" src="../img/movie.png">
-<div class="card-body">
-<h5 class="card-title text-danger">{{ m.title }}</h5>
-<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-<a href="{{ path("evaluation", {"id" : m.id})}}" class="btn btn-primary">Evaluer</a>
-<a href="{{ path("show", {"id" : m.id})}}" class="btn btn-primary">Voir</a>
-</div>
-</div>
+  <div class="text-center card m-3" style="width: 15rem;">
+    <img class="card-img-top" src="../img/movie.png">
+    {# <img class="card-img-top" src="https://lorempixel.com/540/370/"> #}
+    <div class="card-body">
+    <h5 class="card-title text-danger">{{ m.title }}</h5>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <a href="{{ path("evaluation", {"id" : m.id})}}" class="btn btn-primary">Evaluer</a>
+    <a href="{{ path("show", {"id" : m.id})}}" class="btn btn-primary">Voir</a>
+    </div>
+  </div>
 {% endfor %}
+  </div>
+</div>
 {% endblock %}
