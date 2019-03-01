@@ -5,7 +5,11 @@
 <div class="container">
 <h1 class="display-4">Movie Rating</h1>
 <p class="lead">Le premier site français pour évaluer les films tout pourris produits par le cinéma français</p>
+{% if (app.user) %}
 <a class="btn btn-danger text-white ml-5 my-4" href="{{ path('app_logout') }}">Déconnexion</a>
+{% else %}
+<a class="btn btn-primary text-white ml-5 my-4" href="{{ path('app_login') }}">Connexion</a>
+{% endif %}
 </div>
 </div>
 {# A voir si on intégre ds le futur -->
