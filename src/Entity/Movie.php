@@ -154,14 +154,12 @@ class Movie
     public function getAverage() {
         $evaluations = $this->getEvaluations();
         if (!empty($evaluations)) {
-          foreach ($evaluations as $key => $value) {
-            $grades = $value->getGrade();
-            $somme = array_sum([$grades]);
-            dump($somme);
-            
-            $moyenne = $somme/count([$this->evaluations]);
-            return $moyenne;    
-          }
-       }
+            $somme = 0;
+            foreach ($evaluations as $key => $evaluation) {
+                $somme += $evaluation->getGrade();
+                $moyenne = $somme/count($this->evaluations);
+            }
+        }
+       return $moyenne;
     }
   }
